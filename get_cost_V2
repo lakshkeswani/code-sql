@@ -1,0 +1,18 @@
+SELECT 
+    i.invoice_id,
+    i.invoice_number,
+    i.invoice_date,
+    gcc.segment3 AS cost_center_code,
+    fvtv.value_description AS cost_center_name
+FROM 
+    ap_invoices_all i
+JOIN 
+    ap_invoice_distributions_all ida ON i.invoice_id = ida.invoice_id
+JOIN 
+    gl_code_combinations gcc ON ida.dist_code_combination_id = gcc.code_combination_id
+LEFT JOIN 
+    fnd_vs_values_b fvvb ON gcc.segment3 = fvvb.value
+LEFT JOIN 
+    FND_VS_TYPED_VALUES_VL fvtv ON fvvb.value_id = fvtv.value_id
+ORDER BY 
+    i.invoice_date DESC;
