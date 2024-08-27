@@ -1,0 +1,18 @@
+SELECT 
+    i.invoice_id,
+    i.invoice_number,
+    i.invoice_date,
+    gcc.segment3 AS cost_center_code,
+    fv.description AS cost_center_name
+FROM 
+    ap_invoices_all i
+JOIN 
+    ap_invoice_distributions_all ida ON i.invoice_id = ida.invoice_id
+JOIN 
+    gl_code_combinations gcc ON ida.dist_code_combination_id = gcc.code_combination_id
+LEFT JOIN 
+    fnd_flex_value_sets fvs ON fvs.flex_value_set_name = 'Cost Center'
+LEFT JOIN 
+    fnd_flex_values_vl fv ON gcc.segment3 = fv.flex_value AND fv.flex_value_set_id = fvs.flex_value_set_id
+ORDER BY 
+    i.invoice_date DESC;
