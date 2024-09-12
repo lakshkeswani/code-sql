@@ -1,0 +1,15 @@
+SELECT 
+    gcc.segment1 AS balancing_segment_code,
+    fvtv1.typed_value_description AS balancing_segment_description,
+    gcc.segment3 AS site_code,
+    fvtv3.typed_value_description AS site_description
+FROM 
+    gl_code_combinations gcc
+JOIN 
+    fnd_vs_values_b fvvb1 ON gcc.segment1 = fvvb1.flex_value
+JOIN 
+    fnd_vs_typed_values_vl fvtv1 ON fvvb1.flex_value_id = fvtv1.flex_value_id
+JOIN 
+    fnd_vs_values_b fvvb3 ON gcc.segment3 = fvvb3.flex_value
+JOIN 
+    fnd_vs_typed_values_vl fvtv3 ON fvvb3.flex_value_id = fvtv3.flex_value_id
